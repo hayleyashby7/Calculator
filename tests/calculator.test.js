@@ -1,4 +1,10 @@
-const { add, subtract, multiply, divide } = require("../calculator");
+const {
+  add,
+  subtract,
+  multiply,
+  divide,
+  selectOperation,
+} = require("../calculator");
 
 describe("Add", () => {
   test("Add 2 numbers together and return result", () => {
@@ -47,5 +53,60 @@ describe("DivideZero", () => {
     const result = "Cannot divide by zero";
 
     expect(divide(firstNumber, secondNumber)).toBe(result);
+  });
+});
+
+describe("Select Add function", () => {
+  test("Returns correctly from  Add function when + input", () => {
+    const operator = "+";
+    const firstNumber = 2;
+    const secondNumber = 3;
+    const result = 5;
+
+    expect(selectOperation(operator, firstNumber, secondNumber)).toBe(result);
+  });
+});
+
+describe("Select Subtract function", () => {
+  test("Returns correctly from Subtract function when - input", () => {
+    const operator = "-";
+    const firstNumber = 3;
+    const secondNumber = 2;
+    const result = 1;
+
+    expect(selectOperation(operator, firstNumber, secondNumber)).toBe(result);
+  });
+});
+
+describe("Select Multiply function", () => {
+  test("Returns correctly from Multiply function when * input", () => {
+    const operator = "*";
+    const firstNumber = 2;
+    const secondNumber = 3;
+    const result = 6;
+
+    expect(selectOperation(operator, firstNumber, secondNumber)).toBe(result);
+  });
+});
+
+describe("Select Divide function", () => {
+  test("Returns correctly from Divide function when / input", () => {
+    const operator = "/";
+    const firstNumber = 8;
+    const secondNumber = 4;
+    const result = 2;
+
+    expect(selectOperation(operator, firstNumber, secondNumber)).toBe(result);
+  });
+});
+
+describe("Invalid Operator", () => {
+  test("Returns warning over invalid operator", () => {
+    const operator = "$";
+    const firstNumber = 8;
+    const secondNumber = 4;
+    const result = "Invalid Operator";
+
+    expect(selectOperation(operator, firstNumber, secondNumber)).toBe(result);
   });
 });

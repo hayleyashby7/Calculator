@@ -1,5 +1,9 @@
 "use strict";
 
+calculator();
+
+function calculator() {}
+
 // OPERATOR FUNCTIONS
 
 function add(firstNum, secondNum) {
@@ -22,4 +26,22 @@ function divide(firstNum, secondNum) {
   }
 }
 
-module.exports = { add, subtract, multiply, divide };
+function selectOperation(operator, firstNum, secondNum) {
+  switch (operator) {
+    case "+":
+      return add(firstNum, secondNum);
+
+    case "-":
+      return subtract(firstNum, secondNum);
+
+    case "*":
+      return multiply(firstNum, secondNum);
+
+    case "/":
+      return divide(firstNum, secondNum);
+    default:
+      return "Invalid Operator";
+  }
+}
+
+module.exports = { add, subtract, multiply, divide, selectOperation };
