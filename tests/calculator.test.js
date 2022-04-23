@@ -1,4 +1,4 @@
-const { add, subtract, multiply, divide } = require("../scripts/calculator");
+const { add, subtract, multiply, divide } = require("../calculator");
 
 describe("Add", () => {
   test("Add 2 numbers together and return result", () => {
