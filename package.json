@@ -1,0 +1,26 @@
+{
+  "name": "calculator",
+  "version": "1.0.0",
+  "description": "Calculator project",
+  "main": "script.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hayleyashby7/Calculator.git"
+  },
+  "author": "Hayley Ashby",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hayleyashby7/Calculator/issues"
+  },
+  "homepage": "https://github.com/hayleyashby7/Calculator#readme",
+  "devDependencies": {
+    "eslint": "^8.14.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.1.0",
+    "eslint-plugin-promise": "^6.0.0"
+  }
+}
