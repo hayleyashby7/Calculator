@@ -1,9 +1,5 @@
 "use strict";
 
-calculator();
-
-function calculator() {}
-
 // OPERATOR FUNCTIONS
 
 function add(firstNum, secondNum) {
@@ -20,8 +16,10 @@ function multiply(firstNum, secondNum) {
 
 function divide(firstNum, secondNum) {
   if (secondNum === 0) {
-    alert("Cannot divide by zero");
+    return "Cannot divide by zero";
   } else {
     return firstNum / secondNum;
   }
 }
+
+module.exports = { add, subtract, multiply, divide };

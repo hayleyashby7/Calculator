@@ -1,8 +1,49 @@
+<!-- 
+    Calculator UI. 
+
+    1) OPERATOR FUNCTIONS
+    ADD: Take 2 integers and add together. Return value.
+    SUBTRACT: Take 2 integers and subtract first from second. Return value.
+    MULTIPLY: Take 2 integers and multiply first by second. Return value.
+    DIVIDE: Take 2 integers and divide first by second - **SECOND CANNOT BE 0**. Return value.
+
+    2) USER INPUT
+    User will input an operator (+,-,*,/) and 2 integers and then selects correct function above based on operator. 
+
+    3) INTERFACE
+    Need a simple layout:
+    0-9+-*/= and clear buttons
+    Display
+
+    4) DISPLAY FUNCTION
+    Populate display when number buttons clicked - keep track of displayValue variable for future use
+
+    5) BRING TO LIFE
+    When user clicks button, update display. 
+    Flow:
+    User clicks firstNumber
+    User clicks operator
+    User clicks secondNumber
+    Use operator to decide which function to call and then send the first and second number as arguments.
+        return calculatedValue from operation
+
+    *REPEAT AS NEEDED
+    (Previous calculatedValue is first number - Update display to show calculatedValue
+    User clicks operator
+    User clicks secondNumber
+    Use operator to decide which function to call and then send the calculatedValue and second number as arguments.)
+    END REPEAT*
+
+    User clicks =  
+        Display final total     
+
+ -->
+
 <html>
   <head>
     <title>Calculator project</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="script.js" defer></script>
+    <script src="scripts/calculator.js" defer></script>
   </head>
   <body></body>
 </html>
