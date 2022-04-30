@@ -4,6 +4,7 @@
   border-style: solid;
   border-color: black;
   border-width: 5px;
+  background-color: lightgray;
   width: 400px;
   height: 500px;
 }
@@ -11,6 +12,7 @@
 #display {
   border-style: solid;
   border-color: green;
+  background-color: lightgreen;
   border-width: 2px;
   height: 100px;
   margin: 10px;
@@ -18,35 +20,49 @@
 
 #user-input {
   display: flex;
-  flex-direction: row;
-  margin: 10px;
-  justify-content: space-between;
-  height: 350px;
+  flex-flow: row wrap;
 }
 
 .numbers {
+  width: 75%;
   display: flex;
-  flex-direction: column-reverse;
-  margin: 3px;
-  justify-content: space-between;
-  width: 300px;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.number-row {
-  display: flex;
-  flex-direction: row;
-  margin: 5px;
-  justify-content: space-evenly;
+.number {
+  height: 75px;
+  width: 75px;
+  border-style: solid;
+  border-color: red;
+  background-color: lightcoral;
+  border-width: 1px;
 }
 
 .operators {
+  width: 25%;
   display: flex;
   flex-direction: column;
-  margin: 3px;
-  justify-content: space-between;
-  width: 150px;
+  justify-content: center;
+}
+
+.operator {
+  height: 75px;
+  width: 75px;
+  border-style: solid;
+  border-color: blue;
+  background-color: lightblue;
+  border-width: 1px;
 }
 
 .button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 5px;
+}
+
+.function {
+  border-color: orange;
+  background-color: lightgoldenrodyellow;
 }
