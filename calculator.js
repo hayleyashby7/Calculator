@@ -2,7 +2,11 @@
 
 calculator();
 
-function calculator() {}
+function calculator() {
+  let displayValue = "0";
+
+  updateDisplay(displayValue);
+}
 
 // DISPLAY FUNCTIONS
 function updateDisplay(value) {

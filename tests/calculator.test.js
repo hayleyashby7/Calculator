@@ -9,6 +9,7 @@ const {
   divide,
   selectOperation,
   updateDisplay,
+  addButtonClick,
 } = require("../calculator");
 
 describe("Add", () => {
@@ -120,8 +121,26 @@ describe("Update Display", () => {
   test("Updates text content of display element", () => {
     document.body.innerHTML = '<div id="display"></div>';
     const value = "TEST";
+
     expect(document.getElementById("display").textContent).toBe("");
     updateDisplay(value);
     expect(document.getElementById("display").textContent).toBe(value);
   });
 });
+
+/*describe("AddButtonClick", () => {
+  test("Adds click event listener to buttons", () => {
+    document.body.innerHTML =
+      '<div class="buttons"><div class="button">1</div><div class="button">2</div><div class="button">2</div>';
+    
+    addButtonClick();
+
+    let buttons = document.getElementsByClassName('button');
+
+    for (button in buttons) {
+      expect(button.)
+    }
+
+
+  });
+});*/
