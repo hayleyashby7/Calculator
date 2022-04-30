@@ -1,9 +1,14 @@
+/**
+ * @jest-environment jsdom
+ */
+
 const {
   add,
   subtract,
   multiply,
   divide,
   selectOperation,
+  updateDisplay,
 } = require("../calculator");
 
 describe("Add", () => {
@@ -108,5 +113,15 @@ describe("Invalid Operator", () => {
     const result = "Invalid Operator";
 
     expect(selectOperation(operator, firstNumber, secondNumber)).toBe(result);
+  });
+});
+
+describe("Update Display", () => {
+  test("Updates text content of display element", () => {
+    document.body.innerHTML = '<div id="display"></div>';
+    const value = "TEST";
+    expect(document.getElementById("display").textContent).toBe("");
+    updateDisplay(value);
+    expect(document.getElementById("display").textContent).toBe(value);
   });
 });

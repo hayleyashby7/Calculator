@@ -4,6 +4,13 @@ calculator();
 
 function calculator() {}
 
+// DISPLAY FUNCTIONS
+function updateDisplay(value) {
+  let display = document.getElementById("display");
+
+  display.textContent = value;
+}
+
 // OPERATOR FUNCTIONS
 
 function add(firstNum, secondNum) {
@@ -44,4 +51,11 @@ function selectOperation(operator, firstNum, secondNum) {
   }
 }
 
-module.exports = { add, subtract, multiply, divide, selectOperation };
+module.exports = {
+  add,
+  subtract,
+  multiply,
+  divide,
+  selectOperation,
+  updateDisplay,
+};
