@@ -8,11 +8,15 @@ function calculator() {
   updateDisplay(displayValue);
 }
 
+// INTIALISATION FUNCTIONS
+function addButtonClickEvents() {
+  return true;
+}
+
 // DISPLAY FUNCTIONS
 function updateDisplay(value) {
   let display = document.getElementById("display");
-
-  display.textContent = value;
+  console.log(display);
 }
 
 // OPERATOR FUNCTIONS
@@ -55,11 +59,12 @@ function selectOperation(operator, firstNum, secondNum) {
   }
 }
 
-module.exports = {
+export {
   add,
   subtract,
   multiply,
   divide,
   selectOperation,
   updateDisplay,
+  addButtonClickEvents,
 };
