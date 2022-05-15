@@ -60,15 +60,15 @@
   border-width: 1px;
 }
 
-.button {
+.function {
+  border-color: orange;
+  background-color: lightgoldenrodyellow;
+}
+
+button {
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 40px;
   margin: 5px;
-}
-
-.function {
-  border-color: orange;
-  background-color: lightgoldenrodyellow;
 }
