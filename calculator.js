@@ -9,31 +9,31 @@ function calculator() {
 }
 
 // INTIALISATION FUNCTIONS
-function addButtonClickEvents() {
+export function addButtonClickEvents() {
   return true;
 }
 
 // DISPLAY FUNCTIONS
-function updateDisplay(value) {
-  let display = document.getElementById("display");
-  console.log(display);
+export function updateDisplay(value) {
+  let output = document.getElementById("output");
+  output.textContent = value;
 }
 
 // OPERATOR FUNCTIONS
 
-function add(firstNum, secondNum) {
+export function add(firstNum, secondNum) {
   return firstNum + secondNum;
 }
 
-function subtract(firstNum, secondNum) {
+export function subtract(firstNum, secondNum) {
   return firstNum - secondNum;
 }
 
-function multiply(firstNum, secondNum) {
+export function multiply(firstNum, secondNum) {
   return firstNum * secondNum;
 }
 
-function divide(firstNum, secondNum) {
+export function divide(firstNum, secondNum) {
   if (secondNum === 0) {
     return "Cannot divide by zero";
   } else {
@@ -41,7 +41,7 @@ function divide(firstNum, secondNum) {
   }
 }
 
-function selectOperation(operator, firstNum, secondNum) {
+export function selectOperation(operator, firstNum, secondNum) {
   switch (operator) {
     case "+":
       return add(firstNum, secondNum);
@@ -58,13 +58,3 @@ function selectOperation(operator, firstNum, secondNum) {
       return "Invalid Operator";
   }
 }
-
-export {
-  add,
-  subtract,
-  multiply,
-  divide,
-  selectOperation,
-  updateDisplay,
-  addButtonClickEvents,
-};
