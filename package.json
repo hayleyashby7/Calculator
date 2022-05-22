@@ -5,7 +5,7 @@
   "description": "Calculator project",
   "main": "calculator.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha -r jsdom-global/register"
   },
   "repository": {
     "type": "git",
@@ -29,6 +29,9 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-n": "^15.1.0",
     "eslint-plugin-promise": "^6.0.0",
+    "fs": "^0.0.1-security",
+    "jsdom": "19.0.0",
+    "jsdom-global": "3.0.2",
     "mocha": "^10.0.0"
   }
 }

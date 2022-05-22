@@ -1,5 +1,7 @@
 /* test/calculatorTEST.js */
 import { expect } from "chai";
+import { JSDOM } from "jsdom";
+import { readFileSync } from "fs";
 
 import {
   add,
@@ -7,6 +9,7 @@ import {
   multiply,
   divide,
   selectOperation,
+  updateDisplay,
 } from "../calculator.js";
 
 describe("Operator Functions", function () {
@@ -127,5 +130,19 @@ describe("Operator Functions", function () {
         result
       );
     });
+  });
+});
+
+describe("Update Display", function () {
+  it("should update the text content of display element", function () {
+    const value = "TEST";
+    const htmlBuffer = readFileSync("./index.html", { encoding: "utf-8" });
+    const dom = new JSDOM(htmlBuffer);
+    console.log(dom.window.document.getElementById("display").innerHTML);
+    dom.window.document.getElementById("display").innerHTML = "TESTING";
+    console.log(dom.window.document.getElementById("display").innerHTML);
+    // expect(document.getElementById("display").textContent).to.equal("");
+    updateDisplay(value);
+    // expect(document.getElementById("output").textContent).to.equal(value);
   });
 });

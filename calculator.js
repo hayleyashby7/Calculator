@@ -4,7 +4,6 @@ calculator();
 
 function calculator() {
   let displayValue = "0";
-
   updateDisplay(displayValue);
 }
 
@@ -15,8 +14,7 @@ export function addButtonClickEvents() {
 
 // DISPLAY FUNCTIONS
 export function updateDisplay(value) {
-  let output = document.getElementById("output");
-  output.textContent = value;
+  // window.document.getElementById("display").innerHTML = value;
 }
 
 // OPERATOR FUNCTIONS
