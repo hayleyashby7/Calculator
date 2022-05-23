@@ -2,7 +2,6 @@
 import { expect } from "chai";
 import { JSDOM } from "jsdom";
 import { readFileSync } from "fs";
-
 import {
   add,
   subtract,
@@ -10,7 +9,7 @@ import {
   divide,
   selectOperation,
   updateDisplay,
-} from "../calculator.js";
+} from "../src/calculator.js";
 
 describe("Operator Functions", function () {
   describe("add", function () {
@@ -134,15 +133,24 @@ describe("Operator Functions", function () {
 });
 
 describe("Update Display", function () {
+  beforeEach(() => {
+    const dom = new JSDOM(
+      `<html>
+                 <body>
+                     <div>
+                         <p id="display"></p>
+                     </div>
+                </body>
+           </html>`,
+      { url: "http://localhost" }
+    );
+    global.window = dom.window;
+    global.document = dom.window.document;
+  });
+
   it("should update the text content of display element", function () {
     const value = "TEST";
-    const htmlBuffer = readFileSync("./index.html", { encoding: "utf-8" });
-    const dom = new JSDOM(htmlBuffer);
-    console.log(dom.window.document.getElementById("display").innerHTML);
-    dom.window.document.getElementById("display").innerHTML = "TESTING";
-    console.log(dom.window.document.getElementById("display").innerHTML);
-    // expect(document.getElementById("display").textContent).to.equal("");
     updateDisplay(value);
-    // expect(document.getElementById("output").textContent).to.equal(value);
+    expect(document.getElementById("display").innerHTML).to.equal(value);
   });
 });
