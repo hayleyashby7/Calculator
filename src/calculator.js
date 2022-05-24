@@ -1,17 +1,17 @@
 "use strict";
 
 const calculator = {
-  currentValue: 0,
-  displayValue: 0,
-  firstNumber: 0,
-  secondNumber: 0,
+  lastNum: 0,
+  currentNum: 0,
   operator: "",
+  currentTotal: 0,
+  displayValue: "0",
 };
 
-calculator();
+calculatorInit();
 
-function calculator() {
-  updateDisplay(calculator.displayValue);
+function calculatorInit() {
+  updateDisplay(calculator.lastNum.toString());
 
   addButtonClickEvents();
 }
@@ -20,36 +20,36 @@ function calculator() {
 export function addButtonClickEvents() {
   let buttons = document.querySelectorAll("button");
   buttons.forEach((element) => {
-    console.log(element);
     element.addEventListener("click", buttonClick, false);
   });
 }
 
 // DISPLAY FUNCTIONS
-export function updateDisplay() {
-  let currentValue = calculator.currentValue;
-
-  console.log(
-    "Current Value: " + currentValue + " and Button Pressed: " + value
-  );
-  if (currentValue == 0) {
-    console.log("current value set to 0");
-    // No value - start with input value
-    document.getElementById("display").innerHTML = value;
-  } else {
-    console.log("current value NOT 0");
-    document.getElementById("display").innerHTML += value;
+export function updateDisplay(value) {
+  if (value.length >= 8) {
+    value = value.slice(-8);
   }
+
+  document.getElementById("display").innerHTML = value;
 }
 
 // EVENT FUNCTIONS
 function buttonClick() {
+  console.log(this);
+
   calculateNewDisplayValue(this.innerHTML);
 }
 
 function calculateNewDisplayValue(value) {
-  calculator.displayValue = value;
-  updateDisplay();
+  // Check if need to replace 0 as default value
+
+  if (calculator.displayValue == "0") {
+    calculator.displayValue = value;
+  } else {
+    calculator.displayValue += value;
+  }
+
+  updateDisplay(calculator.displayValue);
 }
 
 // OPERATOR FUNCTIONS
