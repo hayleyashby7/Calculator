@@ -1,6 +1,6 @@
 "use strict";
 
-const calculator = {
+export const calculator = {
   lastNum: 0,
   currentNum: 0,
   operator: "",
@@ -35,21 +35,17 @@ export function updateDisplay(value) {
 
 // EVENT FUNCTIONS
 function buttonClick() {
-  console.log(this);
-
   calculateNewDisplayValue(this.innerHTML);
+  updateDisplay(calculator.displayValue);
 }
 
-function calculateNewDisplayValue(value) {
+export function calculateNewDisplayValue(value) {
   // Check if need to replace 0 as default value
-
   if (calculator.displayValue == "0") {
     calculator.displayValue = value;
   } else {
     calculator.displayValue += value;
   }
-
-  updateDisplay(calculator.displayValue);
 }
 
 // OPERATOR FUNCTIONS

@@ -9,6 +9,8 @@ import {
   divide,
   selectOperation,
   // updateDisplay,
+  calculateNewDisplayValue,
+  calculator,
 } from "../src/calculator.js";
 
 describe("Operator Functions", function () {
@@ -129,6 +131,25 @@ describe("Operator Functions", function () {
         result
       );
     });
+  });
+});
+
+describe("calculateNewDisplayValue", function () {
+  it("should replace display value of 0 entirely with new input value", function () {
+    const newValue = "24";
+
+    calculateNewDisplayValue(newValue);
+
+    expect(calculator.displayValue).to.equal(newValue);
+  });
+
+  it("should append new input value onto existing !0 display value", function () {
+    const newValue = "45";
+    calculator.displayValue = "123";
+
+    calculateNewDisplayValue(newValue);
+
+    expect(calculator.displayValue).to.equal("12345");
   });
 });
 
