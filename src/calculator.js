@@ -17,7 +17,7 @@ export class MathFunctions {
 
   divide(firstNum, secondNum) {
     if (secondNum === 0) {
-      return "Cannot divide by zero";
+      throw "Cannot divide by zero";
     } else {
       return firstNum / secondNum;
     }
@@ -37,7 +37,7 @@ export class MathFunctions {
       case "/":
         return this.divide(firstNum, secondNum);
       default:
-        return "Invalid Operator";
+        throw "Invalid Operator";
     }
   }
 }
@@ -112,18 +112,26 @@ export class Calculator extends MathFunctions {
   }
 
   updateCurrentNum(value) {
-    let currentNum = this.currentNum;
-    this.currentNum = currentNum + value;
+    if (this.currentNum === "0") {
+      this.currentNum = value;
+    } else {
+      let currentNum = this.currentNum;
+      this.currentNum = currentNum + value;
+    }
   }
 
   beginCalculation() {
-    this.currentTotal = this.performCalculation(
-      this.operator,
-      parseFloat(this.lastNum),
-      parseFloat(this.currentNum)
-    ).toString();
+    try {
+      this.currentTotal = this.performCalculation(
+        this.operator,
+        parseFloat(this.lastNum),
+        parseFloat(this.currentNum)
+      ).toString();
 
-    this.displayValue = this.currentTotal;
+      this.displayValue = this.currentTotal;
+    } catch (e) {
+      alert("ERROR: " + e);
+    }
   }
 }
 
@@ -137,7 +145,6 @@ function calculatorInit(firstTime = false) {
   } else {
     calculator.reset();
   }
-
   updateDisplay(calculator.displayValue);
 }
 
@@ -154,8 +161,7 @@ function updateDisplay(value) {
   if (value.length >= 8) {
     value = value.slice(-8);
   }
-  //console.log(calculator);
-  // document.getElementById("display").innerHTML = value;
+  document.getElementById("display").innerHTML = value;
 }
 
 export function setDisplayValue(value) {
