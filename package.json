@@ -5,14 +5,7 @@
   "description": "Calculator project",
   "main": "calculator.js",
   "scripts": {
-    "test": "nyc --reporter=text mocha -r jsdom-global/register"
-  },
-  "nyc": {
-    "all": true,
-    "include": [
-      "*.js",
-      "test/*.js"
-    ]
+    "test": "mocha -r jsdom-global/register"
   },
   "repository": {
     "type": "git",

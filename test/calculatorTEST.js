@@ -1,26 +1,27 @@
 /* test/calculatorTEST.js */
 import { expect } from "chai";
 import { JSDOM } from "jsdom";
+import Sinon from "sinon";
 import { readFileSync } from "fs";
 import {
-  add,
-  subtract,
-  multiply,
-  divide,
-  selectOperation,
-  // updateDisplay,
-  calculateNewDisplayValue,
-  calculator,
+  setDisplayValue,
+  buttonAction,
+  Calculator,
 } from "../src/calculator.js";
+let calculator = new Calculator();
 
 describe("Operator Functions", function () {
+  beforeEach(function () {
+    calculator.reset();
+  });
+
   describe("add", function () {
     // Addition operator test
     it("should add 2 numbers together and return result", function () {
       const firstNumber = 2;
       const secondNumber = 3;
       const result = 5;
-      expect(add(firstNumber, secondNumber)).to.equal(result);
+      expect(calculator.add(firstNumber, secondNumber)).to.equal(result);
     });
   });
   describe("subtract", function () {
@@ -29,14 +30,14 @@ describe("Operator Functions", function () {
       const firstNumber = 10;
       const secondNumber = 4;
       const result = 6;
-      expect(subtract(firstNumber, secondNumber)).to.equal(result);
+      expect(calculator.subtract(firstNumber, secondNumber)).to.equal(result);
     });
 
     it("should subtract 1 from 1 and return 0", function () {
       const firstNumber = 1;
       const secondNumber = 1;
       const result = 0;
-      expect(subtract(firstNumber, secondNumber)).to.equal(result);
+      expect(calculator.subtract(firstNumber, secondNumber)).to.equal(result);
     });
   });
   describe("multiply", function () {
@@ -45,14 +46,14 @@ describe("Operator Functions", function () {
       const firstNumber = 2;
       const secondNumber = 3;
       const result = 6;
-      expect(multiply(firstNumber, secondNumber)).to.equal(result);
+      expect(calculator.multiply(firstNumber, secondNumber)).to.equal(result);
     });
 
     it("should multiply 1 by 1 numbers and return 1", function () {
       const firstNumber = 1;
       const secondNumber = 1;
       const result = 1;
-      expect(multiply(firstNumber, secondNumber)).to.equal(result);
+      expect(calculator.multiply(firstNumber, secondNumber)).to.equal(result);
     });
   });
   describe("divide", function () {
@@ -61,99 +62,103 @@ describe("Operator Functions", function () {
       const firstNumber = 8;
       const secondNumber = 2;
       const result = 4;
-      expect(divide(firstNumber, secondNumber)).to.equal(result);
+      expect(calculator.divide(firstNumber, secondNumber)).to.equal(result);
     });
 
     it("should divide 1 by 1 and return 1", function () {
       const firstNumber = 1;
       const secondNumber = 1;
       const result = 1;
-      expect(divide(firstNumber, secondNumber)).to.equal(result);
+      expect(calculator.divide(firstNumber, secondNumber)).to.equal(result);
     });
 
     it("should return 'Divide by zero' warning message", function () {
       const firstNumber = 8;
       const secondNumber = 0;
       const result = "Cannot divide by zero";
-      expect(divide(firstNumber, secondNumber)).to.equal(result);
+      expect(calculator.divide(firstNumber, secondNumber)).to.equal(result);
     });
   });
 
   describe("selectOperation", function () {
     // Operator selection tests
-
     it("should returns correct result from Add function when + input", function () {
-      const operator = "+";
-      const firstNumber = 2;
-      const secondNumber = 3;
-      const result = 5;
-      expect(selectOperation(operator, firstNumber, secondNumber)).to.equal(
-        result
-      );
+      calculator.operator = "+";
+      calculator.lastNum = "2";
+      calculator.updateCurrentNum("3");
+      const result = "5";
+
+      calculator.beginCalculation();
+      expect(calculator.currentTotal).to.equal(result);
     });
 
     it("should returns correct result from Subtract function when - input", function () {
-      const operator = "-";
-      const firstNumber = 3;
-      const secondNumber = 2;
-      const result = 1;
-      expect(selectOperation(operator, firstNumber, secondNumber)).to.equal(
-        result
-      );
+      calculator.operator = "-";
+      calculator.lastNum = "3";
+      calculator.updateCurrentNum("2");
+      const result = "1";
+
+      calculator.beginCalculation();
+      expect(calculator.currentTotal).to.equal(result);
     });
 
     it("should returns correct result from Multiply function when * input", function () {
-      const operator = "*";
-      const firstNumber = 2;
-      const secondNumber = 3;
-      const result = 6;
-      expect(selectOperation(operator, firstNumber, secondNumber)).to.equal(
-        result
-      );
+      calculator.operator = "*";
+      calculator.lastNum = "2";
+      calculator.updateCurrentNum("3");
+      const result = "6";
+
+      calculator.beginCalculation();
+      expect(calculator.currentTotal).to.equal(result);
     });
 
     it("should returns correct result from Divide function when / input", function () {
-      const operator = "/";
-      const firstNumber = 8;
-      const secondNumber = 4;
-      const result = 2;
-      expect(selectOperation(operator, firstNumber, secondNumber)).to.equal(
-        result
-      );
-    });
+      calculator.operator = "/";
+      calculator.lastNum = "8";
+      calculator.updateCurrentNum("4");
+      const result = "2";
 
-    it("should return warning over invalid operator", function () {
-      const operator = "$";
-      const firstNumber = 8;
-      const secondNumber = 4;
-      const result = "Invalid Operator";
-      expect(selectOperation(operator, firstNumber, secondNumber)).to.equal(
-        result
-      );
+      calculator.beginCalculation();
+      expect(calculator.currentTotal).to.equal(result);
     });
   });
 });
 
-describe("calculateNewDisplayValue", function () {
-  it("should replace display value of 0 entirely with new input value", function () {
-    const newValue = "24";
+// NEED ZERO DIVISION AND INVALID OPERATOR TESTS
 
-    calculateNewDisplayValue(newValue);
+/* describe("Event Functions", function () {
+  describe("buttonAction", function () {
+    describe("Number Button", function () {
+      it("should call setNumber function once", function () {
+        let spySetNum = Sinon.spy(setNumber);
+        buttonAction("number", "1");
+      });
 
-    expect(calculator.displayValue).to.equal(newValue);
-  });
+      it("should call setDisplayValue function once", function () {});
+    });
+    describe("Operator Button", function () {
+      it("should call setOperator function once", function () {});
 
-  it("should append new input value onto existing !0 display value", function () {
-    const newValue = "45";
-    calculator.displayValue = "123";
-
-    calculateNewDisplayValue(newValue);
-
-    expect(calculator.displayValue).to.equal("12345");
+      it("should call setDisplayValue function once", function () {});
+    });
+    describe("Number Function Button", function () {
+      it("should call handleFunction function once", function () {});
+    });
   });
 });
 
-/*describe("Update Display", function () {
+describe("Display Functions", function () {
+  describe("setDisplayValue", function () {
+    it("should replace display value of 0 entirely with new input value", function () {
+      const newValue = "24";
+
+      setDisplayValue(newValue);
+
+      expect(calculator.displayValue).to.equal(newValue);
+    });
+  });
+
+  /*describe("Update Display", function () {
   beforeEach(() => {
     const dom = new JSDOM(
       `<html>

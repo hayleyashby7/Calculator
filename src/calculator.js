@@ -1,19 +1,144 @@
 "use strict";
 
-export const calculator = {
-  lastNum: 0,
-  currentNum: 0,
-  operator: "",
-  currentTotal: 0,
-  displayValue: "0",
-};
+export class MathFunctions {
+  constructor() {}
 
-calculatorInit();
+  add(firstNum, secondNum) {
+    return firstNum + secondNum;
+  }
 
-function calculatorInit() {
-  updateDisplay(calculator.lastNum.toString());
+  subtract(firstNum, secondNum) {
+    return firstNum - secondNum;
+  }
 
-  addButtonClickEvents();
+  multiply(firstNum, secondNum) {
+    return firstNum * secondNum;
+  }
+
+  divide(firstNum, secondNum) {
+    if (secondNum === 0) {
+      return "Cannot divide by zero";
+    } else {
+      return firstNum / secondNum;
+    }
+  }
+
+  performCalculation(operator, firstNum, secondNum) {
+    switch (operator) {
+      case "+":
+        return this.add(firstNum, secondNum);
+
+      case "-":
+        return this.subtract(firstNum, secondNum);
+
+      case "*":
+        return this.multiply(firstNum, secondNum);
+
+      case "/":
+        return this.divide(firstNum, secondNum);
+      default:
+        return "Invalid Operator";
+    }
+  }
+}
+
+export class Calculator extends MathFunctions {
+  constructor() {
+    super();
+    this.lastNum = "";
+    this.currentNum = "";
+    this.operator = "";
+    this.currentTotal = "";
+    this.displayValue = "0";
+  }
+
+  // Getters/Setters
+  get lastNum() {
+    return this._lastNum;
+  }
+
+  set lastNum(value) {
+    this._lastNum = value;
+  }
+
+  get currentNum() {
+    return this._currentNum;
+  }
+
+  set currentNum(value) {
+    this._currentNum = value;
+  }
+
+  get operator() {
+    return this._operator;
+  }
+
+  set operator(value) {
+    this._operator = value;
+
+    //Check if part of series of calculations
+    if (this._currentTotal != "") {
+      this._currentNum = this._currentTotal;
+      this._currentTotal = "";
+    }
+
+    // move current number to last number to allow next operand to be entered
+    this._lastNum = this._currentNum;
+    this._currentNum = "";
+  }
+
+  get currentTotal() {
+    return this._currentTotal;
+  }
+
+  set currentTotal(value) {
+    this._currentTotal = value;
+  }
+
+  get displayValue() {
+    return this._displayValue;
+  }
+
+  set displayValue(value) {
+    this._displayValue = value;
+  }
+
+  reset() {
+    this.lastNum = "";
+    this.currentNum = "";
+    this.operator = "";
+    this.currentTotal = "";
+    this.displayValue = "0";
+  }
+
+  updateCurrentNum(value) {
+    let currentNum = this.currentNum;
+    this.currentNum = currentNum + value;
+  }
+
+  beginCalculation() {
+    this.currentTotal = this.performCalculation(
+      this.operator,
+      parseFloat(this.lastNum),
+      parseFloat(this.currentNum)
+    ).toString();
+
+    this.displayValue = this.currentTotal;
+  }
+}
+
+let calculator = new Calculator();
+
+calculatorInit(true);
+
+function calculatorInit(firstTime = false) {
+  if (firstTime) {
+    addButtonClickEvents();
+  } else {
+    calculator.reset();
+  }
+
+  updateDisplay(calculator.displayValue);
 }
 
 // INTIALISATION FUNCTIONS
@@ -25,65 +150,54 @@ export function addButtonClickEvents() {
 }
 
 // DISPLAY FUNCTIONS
-export function updateDisplay(value) {
+function updateDisplay(value) {
   if (value.length >= 8) {
     value = value.slice(-8);
   }
+  //console.log(calculator);
+  // document.getElementById("display").innerHTML = value;
+}
 
-  document.getElementById("display").innerHTML = value;
+export function setDisplayValue(value) {
+  calculator.displayValue = value;
 }
 
 // EVENT FUNCTIONS
-function buttonClick() {
-  calculateNewDisplayValue(this.innerHTML);
+function buttonClick(element) {
+  buttonAction(element.target.className, element.target.innerHTML);
   updateDisplay(calculator.displayValue);
 }
 
-export function calculateNewDisplayValue(value) {
-  // Check if need to replace 0 as default value
-  if (calculator.displayValue == "0") {
-    calculator.displayValue = value;
-  } else {
-    calculator.displayValue += value;
-  }
-}
+export function buttonAction(buttonClass, buttonValue) {
+  switch (buttonClass) {
+    case "number":
+      calculator.updateCurrentNum(buttonValue);
+      setDisplayValue(calculator.currentNum);
+      break;
 
-// OPERATOR FUNCTIONS
+    case "operator":
+      calculator.operator = buttonValue;
+      setDisplayValue(calculator.operator);
+      break;
 
-export function add(firstNum, secondNum) {
-  return firstNum + secondNum;
-}
+    case "number function":
+      handleFunction(buttonValue);
+      break;
 
-export function subtract(firstNum, secondNum) {
-  return firstNum - secondNum;
-}
-
-export function multiply(firstNum, secondNum) {
-  return firstNum * secondNum;
-}
-
-export function divide(firstNum, secondNum) {
-  if (secondNum === 0) {
-    return "Cannot divide by zero";
-  } else {
-    return firstNum / secondNum;
-  }
-}
-
-export function selectOperation(operator, firstNum, secondNum) {
-  switch (operator) {
-    case "+":
-      return add(firstNum, secondNum);
-
-    case "-":
-      return subtract(firstNum, secondNum);
-
-    case "*":
-      return multiply(firstNum, secondNum);
-
-    case "/":
-      return divide(firstNum, secondNum);
     default:
-      return "Invalid Operator";
+      break;
+  }
+}
+
+export function handleFunction(value) {
+  switch (value) {
+    case "=":
+      calculator.beginCalculation();
+      break;
+    case "AC":
+      calculatorInit();
+      break;
+    default:
+      break;
   }
 }
