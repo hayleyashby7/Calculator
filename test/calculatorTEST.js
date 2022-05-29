@@ -1,8 +1,6 @@
 /* test/calculatorTEST.js */
 import { expect } from "chai";
 import { JSDOM } from "jsdom";
-import Sinon from "sinon";
-import { readFileSync } from "fs";
 import {
   setDisplayValue,
   buttonAction,
@@ -72,17 +70,13 @@ describe("Operator Functions", function () {
       expect(calculator.divide(firstNumber, secondNumber)).to.equal(result);
     });
 
-    it("should return 'Divide by zero' warning message", function () {
-      const firstNumber = 8;
-      const secondNumber = 0;
-      const result = "Cannot divide by zero";
-      expect(calculator.divide(firstNumber, secondNumber)).to.equal(result);
-    });
+    // TODO: TEST ERROR HANDLING FOR INVALID OPERATOR AND DIVIDE BY ZERO
   });
 
   describe("selectOperation", function () {
     // Operator selection tests
-    it("should returns correct result from Add function when + input", function () {
+
+    it("should return correct result from Add function when + input", function () {
       calculator.operator = "+";
       calculator.lastNum = "2";
       calculator.updateCurrentNum("3");
@@ -92,7 +86,7 @@ describe("Operator Functions", function () {
       expect(calculator.currentTotal).to.equal(result);
     });
 
-    it("should returns correct result from Subtract function when - input", function () {
+    it("should return correct result from Subtract function when - input", function () {
       calculator.operator = "-";
       calculator.lastNum = "3";
       calculator.updateCurrentNum("2");
@@ -102,7 +96,7 @@ describe("Operator Functions", function () {
       expect(calculator.currentTotal).to.equal(result);
     });
 
-    it("should returns correct result from Multiply function when * input", function () {
+    it("should return correct result from Multiply function when * input", function () {
       calculator.operator = "*";
       calculator.lastNum = "2";
       calculator.updateCurrentNum("3");
@@ -112,7 +106,7 @@ describe("Operator Functions", function () {
       expect(calculator.currentTotal).to.equal(result);
     });
 
-    it("should returns correct result from Divide function when / input", function () {
+    it("should return correct result from Divide function when / input", function () {
       calculator.operator = "/";
       calculator.lastNum = "8";
       calculator.updateCurrentNum("4");
@@ -121,33 +115,30 @@ describe("Operator Functions", function () {
       calculator.beginCalculation();
       expect(calculator.currentTotal).to.equal(result);
     });
+
+    // TODO: TEST ERROR HANDLING FOR INVALID OPERATOR AND DIVIDE BY ZERO
   });
 });
 
-// NEED ZERO DIVISION AND INVALID OPERATOR TESTS
+describe("Event Functions", function () {
+  beforeEach(function () {
+    calculator.reset();
+  });
 
-/* describe("Event Functions", function () {
   describe("buttonAction", function () {
-    describe("Number Button", function () {
-      it("should call setNumber function once", function () {
-        let spySetNum = Sinon.spy(setNumber);
-        buttonAction("number", "1");
-      });
-
-      it("should call setDisplayValue function once", function () {});
-    });
-    describe("Operator Button", function () {
-      it("should call setOperator function once", function () {});
-
-      it("should call setDisplayValue function once", function () {});
-    });
-    describe("Number Function Button", function () {
-      it("should call handleFunction function once", function () {});
-    });
+    /* TESTS:
+    NUMBER - calls number routine in class and calls update display value
+    OPERATOR - update operator parameter in class and calls update display value
+    NUMBER FUNCTION - calls HandleFunction
+    */
   });
 });
 
 describe("Display Functions", function () {
+  beforeEach(function () {
+    calculator.reset();
+  });
+
   describe("setDisplayValue", function () {
     it("should replace display value of 0 entirely with new input value", function () {
       const newValue = "24";
@@ -157,8 +148,9 @@ describe("Display Functions", function () {
       expect(calculator.displayValue).to.equal(newValue);
     });
   });
+});
 
-  /*describe("Update Display", function () {
+/*describe("Update Display", function () {
   beforeEach(() => {
     const dom = new JSDOM(
       `<html>

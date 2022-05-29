@@ -74,15 +74,37 @@ export class Calculator extends MathFunctions {
   }
 
   set operator(value) {
-    this._operator = value;
-
     //Check if part of series of calculations
-    if (this._currentTotal != "") {
+    let calculate = false;
+
+    switch (true) {
+      case value == "":
+        break;
+      case this._currentTotal != "":
+        // Multiple totalled operations
+        calculate = true;
+        break;
+
+      case this._currentNum != "" && this._lastNum != "":
+        // last operation needs to be totalled before progressing
+        if (this._operator == "") {
+          this._operator = value;
+        }
+        calculate = true;
+        break;
+
+      default:
+        break;
+    }
+
+    if (calculate) {
+      // Update running total before progressing further
+      this.beginCalculation();
       this._currentNum = this._currentTotal;
-      this._currentTotal = "";
     }
 
     // move current number to last number to allow next operand to be entered
+    this._operator = value;
     this._lastNum = this._currentNum;
     this._currentNum = "";
   }
@@ -129,6 +151,7 @@ export class Calculator extends MathFunctions {
       ).toString();
 
       this.displayValue = this.currentTotal;
+      console.log(calculator);
     } catch (e) {
       alert("ERROR: " + e);
     }
@@ -149,7 +172,7 @@ function calculatorInit(firstTime = false) {
 }
 
 // INTIALISATION FUNCTIONS
-export function addButtonClickEvents() {
+function addButtonClickEvents() {
   let buttons = document.querySelectorAll("button");
   buttons.forEach((element) => {
     element.addEventListener("click", buttonClick, false);
@@ -166,6 +189,7 @@ function updateDisplay(value) {
 
 export function setDisplayValue(value) {
   calculator.displayValue = value;
+  console.log(calculator);
 }
 
 // EVENT FUNCTIONS
@@ -184,6 +208,7 @@ export function buttonAction(buttonClass, buttonValue) {
     case "operator":
       calculator.operator = buttonValue;
       setDisplayValue(calculator.operator);
+      console.log(calculator);
       break;
 
     case "number function":
@@ -199,6 +224,8 @@ export function handleFunction(value) {
   switch (value) {
     case "=":
       calculator.beginCalculation();
+      calculator.lastNum = calculator.currentTotal;
+      calculator.currentNum = "";
       break;
     case "AC":
       calculatorInit();
