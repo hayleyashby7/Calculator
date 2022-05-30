@@ -17,13 +17,22 @@ export class MathFunctions {
 
   divide(firstNum, secondNum) {
     if (secondNum === 0) {
-      throw "Cannot divide by zero";
+      throw new TypeError("Catastrophic user error (divide by zero)");
     } else {
       return firstNum / secondNum;
     }
   }
 
   performCalculation(operator, firstNum, secondNum) {
+    // Sanity checks
+    if (Number.isNaN(firstNum)) {
+      throw new TypeError("First operand is not a number");
+    }
+
+    if (Number.isNaN(secondNum)) {
+      throw new TypeError("Second operand is not a number");
+    }
+
     switch (operator) {
       case "+":
         return this.add(firstNum, secondNum);
@@ -37,7 +46,7 @@ export class MathFunctions {
       case "/":
         return this.divide(firstNum, secondNum);
       default:
-        throw "Invalid Operator";
+        throw new TypeError("Invalid Operator");
     }
   }
 }
@@ -76,17 +85,20 @@ export class Calculator extends MathFunctions {
   set operator(value) {
     //Check if part of series of calculations
     let calculate = false;
+    let update = false;
 
     switch (true) {
       case value == "":
+        update = true;
         break;
+
       case this._currentTotal != "":
         // Multiple totalled operations
         calculate = true;
         break;
 
       case this._currentNum != "" && this._lastNum != "":
-        // last operation needs to be totalled before progressing
+        // Last operation needs to be totalled before progressing
         if (this._operator == "") {
           this._operator = value;
         }
@@ -94,19 +106,25 @@ export class Calculator extends MathFunctions {
         break;
 
       default:
+        update = true;
         break;
     }
 
     if (calculate) {
       // Update running total before progressing further
-      this.beginCalculation();
+      update = this.beginCalculation();
       this._currentNum = this._currentTotal;
     }
 
-    // move current number to last number to allow next operand to be entered
-    this._operator = value;
-    this._lastNum = this._currentNum;
-    this._currentNum = "";
+    if (update) {
+      // move current number to last number to allow next operand to be entered
+      this._operator = value;
+      this._lastNum = this._currentNum;
+      this._currentNum = "";
+    } else {
+      // Error updating data - reset
+      calculatorInit();
+    }
   }
 
   get currentTotal() {
@@ -143,6 +161,8 @@ export class Calculator extends MathFunctions {
   }
 
   beginCalculation() {
+    let successful = false;
+
     try {
       this.currentTotal = this.performCalculation(
         this.operator,
@@ -151,24 +171,26 @@ export class Calculator extends MathFunctions {
       ).toString();
 
       this.displayValue = this.currentTotal;
-      console.log(calculator);
+      successful = true;
     } catch (e) {
-      alert("ERROR: " + e);
+      console.log(e);
+      alert(e);
     }
+    return successful;
   }
 }
 
 let calculator = new Calculator();
 
-calculatorInit(true);
+calculatorInit(calculator, true);
 
-function calculatorInit(firstTime = false) {
+export function calculatorInit(calcObj, firstTime = false) {
   if (firstTime) {
     addButtonClickEvents();
   } else {
-    calculator.reset();
+    calcObj.reset();
   }
-  updateDisplay(calculator.displayValue);
+  updateDisplay(calcObj.displayValue);
 }
 
 // INTIALISATION FUNCTIONS
@@ -187,32 +209,30 @@ function updateDisplay(value) {
   document.getElementById("display").innerHTML = value;
 }
 
-export function setDisplayValue(value) {
-  calculator.displayValue = value;
-  console.log(calculator);
+export function setDisplayValue(calcObj, value) {
+  calcObj.displayValue = value;
 }
 
 // EVENT FUNCTIONS
 function buttonClick(element) {
-  buttonAction(element.target.className, element.target.innerHTML);
+  buttonAction(calculator, element.target.className, element.target.innerHTML);
   updateDisplay(calculator.displayValue);
 }
 
-export function buttonAction(buttonClass, buttonValue) {
+export function buttonAction(calcObj, buttonClass, buttonValue) {
   switch (buttonClass) {
     case "number":
-      calculator.updateCurrentNum(buttonValue);
-      setDisplayValue(calculator.currentNum);
+      calcObj.updateCurrentNum(buttonValue);
+      setDisplayValue(calcObj, calcObj.currentNum);
       break;
 
     case "operator":
-      calculator.operator = buttonValue;
-      setDisplayValue(calculator.operator);
-      console.log(calculator);
+      calcObj.operator = buttonValue;
+      setDisplayValue(calcObj, calcObj.operator);
       break;
 
-    case "number function":
-      handleFunction(buttonValue);
+    case "number utility":
+      handleUtility(calcObj, buttonValue);
       break;
 
     default:
@@ -220,17 +240,26 @@ export function buttonAction(buttonClass, buttonValue) {
   }
 }
 
-export function handleFunction(value) {
+export function handleUtility(calcObj, value) {
   switch (value) {
     case "=":
-      calculator.beginCalculation();
-      calculator.lastNum = calculator.currentTotal;
-      calculator.currentNum = "";
+      equalsFunction(calcObj);
       break;
     case "AC":
-      calculatorInit();
+      calculatorInit(calcObj);
       break;
     default:
       break;
+  }
+
+  function equalsFunction(calcObj) {
+    if (calcObj.beginCalculation()) {
+      // Successful calculation
+      calcObj.lastNum = calcObj.currentTotal;
+      calcObj.currentNum = "";
+    } else {
+      //Unsuccessful calculation - reset
+      calculatorInit(calcObj);
+    }
   }
 }
