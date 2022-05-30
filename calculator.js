@@ -174,7 +174,7 @@ export class Calculator extends MathFunctions {
       successful = true;
     } catch (e) {
       console.log(e);
-      // alert(e);
+      alert(e);
     }
     return successful;
   }
@@ -206,7 +206,7 @@ function updateDisplay(value) {
   if (value.length >= 8) {
     value = value.slice(-8);
   }
-  //document.getElementById("display").innerHTML = value;
+  document.getElementById("display").innerHTML = value;
 }
 
 export function setDisplayValue(calcObj, value) {
