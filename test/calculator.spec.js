@@ -331,26 +331,3 @@ describe("Exception handling", function () {
     );
   });
 });
-
-/*describe("Update Display", function () {
-  beforeEach(() => {
-    const dom = new JSDOM(
-      `<html>
-                 <body>
-                     <div>
-                         <p id="display"></p>
-                     </div>
-                </body>
-           </html>`,
-      { url: "http://localhost" }
-    );
-    global.window = dom.window;
-    global.document = dom.window.document;
-  });
-
-  it("should update the text content of display element", function () {
-    const value = "TEST";
-    updateDisplay(value);
-    expect(document.getElementById("display").innerHTML).to.equal(value);
-  });
-}); */
