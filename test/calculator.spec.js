@@ -7,7 +7,7 @@ import {
   handleUtility,
   buttonAction,
   Calculator,
-} from "../src/calculator.js";
+} from "../calculator.js";
 
 let calculatorTEST = new Calculator();
 let spy;

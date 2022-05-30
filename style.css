@@ -65,6 +65,11 @@
   background-color: lightgoldenrodyellow;
 }
 
+.subtext {
+  font-size: 18px;
+  color: #6f1a0b;
+}
+
 button {
   display: flex;
   justify-content: center;
