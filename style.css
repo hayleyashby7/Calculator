@@ -47,8 +47,14 @@
 }
 
 .operator {
+	width: 90%;
 	border-color: blue;
 	background-color: lightblue;
+}
+
+.utilities {
+	width: 100%;
+	display: flex;
 }
 
 .utility {
@@ -57,8 +63,8 @@
 }
 
 .subtext {
-  font-size: 18px;
-  color: #6f1a0b;
+	font-size: 18px;
+	color: #6f1a0b;
 }
 
 button {
@@ -77,6 +83,10 @@ button {
 	width: 63%;
 }
 
-#nEquals {
-	width: 100%;
+#uEquals {
+	width: 75%;
+}
+
+#uClear {
+	width: 25%;
 }
