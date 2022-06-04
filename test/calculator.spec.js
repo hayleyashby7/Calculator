@@ -6,6 +6,7 @@ import { setDisplayValue, handleUtility, buttonAction, Calculator } from "../cal
 
 let calculatorTEST = new Calculator();
 let spy;
+let alert;
 
 describe("Calculation Functions", function () {
 	beforeEach(function () {

@@ -7,6 +7,9 @@
 	"scripts": {
 		"test": "mocha  -r jsdom-global/register"
 	},
+	"mocha": {
+		"file": "./test/setup.js"
+	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/hayleyashby7/Calculator.git"
