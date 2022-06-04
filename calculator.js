@@ -217,7 +217,7 @@ let calculator = new Calculator();
 
 calculatorInit(calculator, true);
 
-export function calculatorInit(calcObj, firstTime = false) {
+function calculatorInit(calcObj, firstTime = false) {
 	if (firstTime) {
 		addButtonClickEvents();
 	} else {
@@ -239,7 +239,7 @@ function updateDisplay(value) {
 	if (value.length >= 8) {
 		value = value.slice(-8);
 	}
-	document.getElementById("display").innerHTML = value;
+	document.getElementById("display").textContent = value;
 }
 
 export function setDisplayValue(calcObj, value) {
@@ -248,7 +248,7 @@ export function setDisplayValue(calcObj, value) {
 
 // EVENT FUNCTIONS
 function buttonClick(element) {
-	buttonAction(calculator, element.target.className, element.target.innerHTML);
+	buttonAction(calculator, element.target.className, element.target.textContent);
 	updateDisplay(calculator.displayValue);
 }
 
